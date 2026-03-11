@@ -59,7 +59,7 @@
 
         <p>Throttling Coefficient (Φ): <div id="phiDisplay" class="stat healthy">1.0000</div></p>
         <p>Minting Power (1 Pi = ? REF): <div id="mintPowerDisplay" class="stat">3,140,000 REF</div></p>
-        <p style="font-size: 0.8rem; color: #a0aab2;">$\Phi = ((\frac{L \times ExitCap}{S / 10M}) / Gamma)^2$</p>
+        <p style="font-size: 0.8rem; color: #a0aab2;">The mathematical logic: $\Phi = ((\frac{L \times ExitCap}{S / 10M}) / Gamma)^2$</p>
     </div>
 
     <script>
@@ -85,7 +85,7 @@
                 const ratio = availableExit / (supply / QWF);
                 
                 if (ratio < gamma) {
-                    // Removed redundancy: simplified formula structure
+                    // Removed redundancy: simplified formula structure to reduce UI clutter
                     phi = Math.pow(ratio / gamma, 2); 
                 }
             }
