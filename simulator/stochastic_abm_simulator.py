@@ -145,36 +145,3 @@ ax2.grid(True)
 plt.tight_layout()
 plt.savefig('simulator/pirc101_simulation_chart.png')
 print("Simulation complete. Chart saved in 'simulator/' folder.")
-# --- Execute Simulation (90-Day Stochastic Stress Test) ---
-sim = PiRC101_Visual_Sim(num_agents=300)
-for _ in range(90):
-    sim.run_epoch()
-
-# --- Visualization Script using Matplotlib ---
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
-
-# Plot 1: System Health Indicator (Phi)
-ax1.plot(sim.history['epoch'], sim.history['phi'], color='red', linewidth=2, label='System Solvency (Phi)')
-ax1.axhline(y=1.0, color='green', linestyle='--', label='Optimal Expansion (1.0)')
-ax1.set_title('PiRC-101 Guardrail: Reflexive Phi Throttling Under Panicked Agent-Based Behavior')
-ax1.set_ylabel('Phi Value (State Machine Guard)')
-ax1.legend(loc='lower left')
-ax1.grid(True)
-
-# Plot 2: Macroeconomic Trends (Liquidity vs Supply)
-ax2.plot(sim.history['epoch'], sim.history['liquidity'], color='blue', label='External AMM Liquidity (USD)')
-ax2.set_ylabel('Liquidity Depth (USD)', color='blue')
-ax2.tick_params(axis='y', labelcolor='blue')
-
-ax3 = ax2.twinx()
-ax3.plot(sim.history['epoch'], sim.history['ref_supply'], color='purple', linestyle='-', label='Internal REF Supply (Credit)')
-ax3.set_ylabel('Credit Supply (REF)', color='purple')
-ax3.tick_params(axis='y', labelcolor='purple')
-
-ax2.set_title('Protocol Convergence: Liquidity Depletion vs Deterministic Supply Cap')
-ax2.set_xlabel('Epoch (Days)')
-ax2.grid(True)
-
-plt.tight_layout()
-plt.savefig('simulator/pirc101_simulation_chart.png')
-print("Simulation complete. Chart saved in 'simulator/' folder.")
