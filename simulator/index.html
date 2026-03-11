@@ -4,41 +4,43 @@
     <meta charset="UTF-8">
     <title>PiRC-101 Justice Engine Visualizer</title>
     <style>
-        body { font-family: system-ui, sans-serif; background: #1a1a2e; color: #fff; padding: 2rem; max-width: 600px; margin: auto; }
-        .card { background: #16213e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        body { font-family: system-ui, sans-serif; background: #1a1a2e; color: #fff; padding: 1rem; max-width: 600px; margin: auto; }
+        .card { background: #16213e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border: 1px solid #0f3460;}
         .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #a0aab2; }
-        input { width: 100%; padding: 8px; border-radius: 4px; border: none; background: #2a3b5c; color: white; }
+        label { display: block; margin-bottom: 5px; color: #a0aab2; font-size: 0.9rem;}
+        input { width: 100%; padding: 8px; border-radius: 4px; border: none; background: #2a3b5c; color: white; box-sizing: border-box;}
         .stat { font-size: 1.5rem; color: #e94560; font-weight: bold; margin-top: 5px; }
         .healthy { color: #4caf50; }
-        .warning { color: #ff9800; }
         .critical { color: #f44336; }
+        hr { border: 0; border-top: 1px solid #0f3460; margin: 20px 0;}
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h2>⚖️ PiRC-101 State Machine</h2>
-        
+        <h2>⚖️ PiRC-101 State Machine Visualizer</h2>
+        <p style="font-size: 0.8rem; color: #a0aab2;">Based on Normative Whitepaper Specifications.</p>
+        <hr>
         <div class="input-group">
-            <label>External Pi Price (USD)</label>
+            <label>External Pi Price (USD) [ψ]</label>
             <input type="number" id="piPrice" value="0.314" step="0.01" oninput="calculateState()">
         </div>
         
         <div class="input-group">
-            <label>AMM Liquidity Depth (USD)</label>
+            <label>AMM Liquidity Depth (USD) [L]</label>
             <input type="number" id="liquidity" value="10000000" step="100000" oninput="calculateState()">
         </div>
         
         <div class="input-group">
-            <label>Total Circulating REF Supply</label>
-            <input type="number" id="refSupply" value="500000000" step="1000000" oninput="calculateState()">
+            <label>Total Circulating REF Supply [S]</label>
+            <input type="number" id="refSupply" value="1000000000" step="1000000" oninput="calculateState()">
         </div>
 
-        <hr style="border-color: #0f3460; margin: 20px 0;">
+        <hr>
 
         <p>Throttling Coefficient (Φ): <div id="phiDisplay" class="stat healthy">1.0000</div></p>
         <p>Minting Power (1 Pi = ? REF): <div id="mintPowerDisplay" class="stat">3,140,000 REF</div></p>
+        <p style="font-size: 0.8rem; color: #a0aab2;">$\Phi = ((\frac{L \times 0.001}{S / 10M}) / 1.5)^2$</p>
     </div>
 
     <script>
@@ -53,11 +55,12 @@
 
             let phi = 1.0;
             if (supply > 0) {
+                // Ratio of total available daily exit USD (L*0.001) to total REF Debt scaled by QWF.
                 const availableExit = liquidity * DAILY_EXIT_CAP;
                 const ratio = availableExit / (supply / QWF);
                 
                 if (ratio < GAMMA) {
-                    phi = Math.pow(ratio / GAMMA, 2); // Quadratic collapse
+                    phi = Math.pow(ratio / GAMMA, 2); // Quadratic collapse formula
                 }
             }
 
@@ -72,9 +75,8 @@
                 new Intl.NumberFormat().format(mintPower.toFixed(0)) + " REF";
         }
 
-        // Init
+        // Initialize view
         calculateState();
     </script>
 </body>
 </html>
-
