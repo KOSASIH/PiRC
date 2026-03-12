@@ -100,7 +100,7 @@ MIT License
 PiRC (Pi Requests for Comment) menggabungkan ekosistem token, treasury, governance, DEX executor, reward engine, dan liquidity controller dalam satu loop ekonomi terintegrasi.
 
 ### Diagram Arsitektur
-![PiRC Architecture](https://github.com/Clawue884/PiRC/blob/main/diagrams/a_flowchart_diagram_illustrates_the_pirc_ecosystem.png
+![PiRC Architecture]![PiRC Architecture](file_00000000694471fa81c2a3a9c9367998.png)
 )
 > Diagram di atas menggambarkan alur interaksi antara:
 > - **PiRC Token** (mint-on-demand)
@@ -115,8 +115,8 @@ PiRC (Pi Requests for Comment) menggabungkan ekosistem token, treasury, governan
 
 ### Dokumen Pendukung
 Untuk penjelasan lebih lengkap mengenai tiap modul dan interaksi kontrak, lihat dokumen arsitektur:
-[PiRC Architecture Overview](https://github.com/Clawue884/PiRC/blob/main/diagrams/pirc_architecture_overview.md)
 
+[PiRC Architecture Overview](https://github.com/Clawue884/PiRC/blob/main/diagrams/pirc_architecture_overview.md)
 ---
 
 ┌─────────────┐
@@ -155,12 +155,14 @@ Diagram ini menggambarkan alur modul PiRC:
 - **Bootstrapper & GitHub Actions** → Deployment, setup awal, simulasi otomatis
 
 ## Modul Klik Langsung ke Kontrak
-- [PiRC Token](https://github.com/Clawue884/PiRC/blob/main/contracts/pi_token.rs)
-- [Treasury Vault](https://github.com/Clawue884/PiRC/blob/main/contracts/treasury_vault.rs)
-- [Governance Contract](https://github.com/Clawue884/PiRC/blob/main/contracts/governance.rs)
-- [Liquidity Controller](https://github.com/Clawue884/PiRC/blob/main/contracts/liquidity_controller.rs)
-- [DEX Executor](https://github.com/Clawue884/PiRC/blob/main/contracts/dex_executor_a.rs)
-- [Reward Engine](https://github.com/Clawue884/PiRC/blob/main/contracts/reward_engine.rs)
-- [Bootstrapper & Automation](https://github.com/Clawue884/PiRC/blob/main/bootstrap.rs)
 
+- [PiRC Token](pi_token.rs)
+- [Treasury Vault](treasury_vault.rs)
+- [Governance Contract](governance.rs)
+- [Liquidity Controller](liquidity_controller.rs)
+- [DEX Executor](dex_executor_a.rs)
+- [Reward Engine](reward_engine.rs)
+- [Bootstrapper & Automation](bootstrap.rs)
+
+  
 ## Ekosistem Loop Ekonomi
