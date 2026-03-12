@@ -118,8 +118,3 @@ Untuk penjelasan lebih lengkap mengenai tiap modul dan interaksi kontrak, lihat 
 [PiRC Architecture Overview](diagrams/pirc_architecture_overview.md)
 
 ---
-
-**Catatan:**
-- Simpan **gambar diagram** di folder `diagrams/` pada repo.
-- Simpan **dokumen arsitektur** (`.md`) di folder yang sama supaya link internal tetap valid.
-- Update diagram dan dokumen seiring perubahan kontrak atau alur ekonomi.
