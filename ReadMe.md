@@ -91,12 +91,35 @@ Automated simulation runs using GitHub Actions.
 
 ---
 
-## PiRC Architecture
-![PiRC Architecture](diagrams/pirc_architecture_overview.png)
-Lihat juga dokumen [Architecture Overview](diagrams/pirc_architecture_overview.md)
-
-
-
 # License
 
 MIT License
+
+## PiRC Architecture Overview
+
+PiRC (Pi Requests for Comment) menggabungkan ekosistem token, treasury, governance, DEX executor, reward engine, dan liquidity controller dalam satu loop ekonomi terintegrasi.
+
+### Diagram Arsitektur
+![PiRC Architecture](diagrams/a_flowchart_diagram_illustrates_the_pirc_ecosystem.png)
+
+> Diagram di atas menggambarkan alur interaksi antara:
+> - **PiRC Token** (mint-on-demand)
+> - **Treasury Vault**
+> - **Governance Contract**
+> - **Liquidity Controller**
+> - **DEX Executor** (Free-Fault DEX)
+> - **Reward Engine**
+> - **Bootstrapper & GitHub Actions**
+>
+> Setiap modul berkontribusi pada loop ekonomi yang reflexive dan sybil-resistant.
+
+### Dokumen Pendukung
+Untuk penjelasan lebih lengkap mengenai tiap modul dan interaksi kontrak, lihat dokumen arsitektur:
+[PiRC Architecture Overview](diagrams/pirc_architecture_overview.md)
+
+---
+
+**Catatan:**
+- Simpan **gambar diagram** di folder `diagrams/` pada repo.
+- Simpan **dokumen arsitektur** (`.md`) di folder yang sama supaya link internal tetap valid.
+- Update diagram dan dokumen seiring perubahan kontrak atau alur ekonomi.
