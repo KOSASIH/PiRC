@@ -1,34 +1,41 @@
 import time
 import random
-import requests # Requires: pip install requests
 
 class JusticeEngineOracle:
+    """
+    Simulates the Multi-Source Medianized Oracle feed for PiRC-101.
+    Includes a 15% Volatility Circuit Breaker.
+    """
     def __init__(self):
-        self.QWF = 10_000_000
-        self.base_url = "https://api.coingecko.com/api/v3/simple/price?ids=pi-network&vs_currencies=usd"
+        self.qwf = 10_000_000  # Sovereign Multiplier
+        self.base_price = 0.2248
+        self.last_price = 0.2248
 
-    def get_live_price(self):
-        # Placeholder for real API; if API is offline, it simulates the current 0.2248
+    def fetch_medianized_price(self):
+        # Simulating aggregation from 3 independent sources
+        fluctuation = random.uniform(-0.005, 0.005)
+        current_price = self.base_price + fluctuation
+        
+        # 15% Deviation Check (Circuit Breaker)
+        deviation = abs(current_price - self.last_price) / self.last_price
+        if deviation > 0.15:
+            print("[CRITICAL] Oracle Desync Detected! Triggering Circuit Breaker.")
+            return self.last_price
+        
+        self.last_price = current_price
+        return current_price
+
+    def run_dashboard(self):
+        print("--- PiRC-101 Justice Engine: Live Feed ---")
         try:
-            # response = requests.get(self.base_url).json()
-            # price = response['pi-network']['usd']
-            price = 0.2248 # Standardized for PR-45 validation
-        except:
-            price = 0.2248 
-        return price
-
-    def calculate_impact(self):
-        price = self.get_live_price()
-        purchasing_power = price * self.QWF
-        print(f"--- [LIVE ORACLE FEED] ---")
-        print(f"Current Market Price: ${price:.4f}")
-        print(f"Internal Purchasing Power: ${purchasing_power:,.2f} USD")
-        print(f"Status: REF Sovereign Credit is 100% Backed.")
-        print(f"--------------------------")
+            while True:
+                price = self.fetch_medianized_price()
+                ippr = price * self.qwf
+                print(f"[ORACLE] Market: ${price:.4f} | IPPR (USD): ${ippr:,.2f}")
+                time.sleep(5)
+        except KeyboardInterrupt:
+            print("\nShutting down Oracle stream...")
 
 if __name__ == "__main__":
     oracle = JusticeEngineOracle()
-    while True:
-        oracle.calculate_impact()
-        time.sleep(10) # Updates every 10 seconds for real-time feel
-
+    oracle.run_dashboard()
