@@ -100,8 +100,8 @@ MIT License
 PiRC (Pi Requests for Comment) menggabungkan ekosistem token, treasury, governance, DEX executor, reward engine, dan liquidity controller dalam satu loop ekonomi terintegrasi.
 
 ### Diagram Arsitektur
-![PiRC Architecture](diagrams/a_flowchart_diagram_illustrates_the_pirc_ecosystem.png)
-
+![PiRC Architecture](https://github.com/Clawue884/PiRC/blob/main/diagrams/a_flowchart_diagram_illustrates_the_pirc_ecosystem.png
+)
 > Diagram di atas menggambarkan alur interaksi antara:
 > - **PiRC Token** (mint-on-demand)
 > - **Treasury Vault**
@@ -115,7 +115,7 @@ PiRC (Pi Requests for Comment) menggabungkan ekosistem token, treasury, governan
 
 ### Dokumen Pendukung
 Untuk penjelasan lebih lengkap mengenai tiap modul dan interaksi kontrak, lihat dokumen arsitektur:
-[PiRC Architecture Overview](diagrams/pirc_architecture_overview.md)
+[PiRC Architecture Overview](https://github.com/Clawue884/PiRC/blob/main/diagrams/pirc_architecture_overview.md)
 
 ---
 
@@ -144,16 +144,23 @@ Untuk penjelasan lebih lengkap mengenai tiap modul dan interaksi kontrak, lihat 
 
        # PiRC Architecture Overview
 
-Klik modul untuk melihat kontrak dan dokumentasi:
 
-- [PiRC Token](contracts/pi_token.rs)
-- [Treasury Vault](contracts/treasury_vault.rs)
-- [Governance Contract](contracts/governance.rs)
-- [Liquidity Controller](contracts/liquidity_controller.rs)
-- [DEX Executor](contracts/dex_executor_a.rs)
-- [Reward Engine](contracts/reward_engine.rs)
-- [Bootstrapper & Automation](bootstrap.rs + automation/)
+Diagram ini menggambarkan alur modul PiRC:
+- **PiRC Token** → Mint-on-demand token utama
+- **Treasury Vault** → Menyimpan cadangan dan alokasi token
+- **Governance Contract** → Protokol tata kelola & voting
+- **Liquidity Controller** → Mengelola likuiditas dan insentif
+- **DEX Executor** → Free-Fault DEX untuk eksekusi trading
+- **Reward Engine** → Menyalurkan reward ke pengguna & pionir
+- **Bootstrapper & GitHub Actions** → Deployment, setup awal, simulasi otomatis
 
-![PiRC Architecture Diagram](diagrams/a_flowchart_diagram_illustrates_the_pirc_ecosystem.png)
+## Modul Klik Langsung ke Kontrak
+- [PiRC Token](https://github.com/Clawue884/PiRC/blob/main/contracts/pi_token.rs)
+- [Treasury Vault](https://github.com/Clawue884/PiRC/blob/main/contracts/treasury_vault.rs)
+- [Governance Contract](https://github.com/Clawue884/PiRC/blob/main/contracts/governance.rs)
+- [Liquidity Controller](https://github.com/Clawue884/PiRC/blob/main/contracts/liquidity_controller.rs)
+- [DEX Executor](https://github.com/Clawue884/PiRC/blob/main/contracts/dex_executor_a.rs)
+- [Reward Engine](https://github.com/Clawue884/PiRC/blob/main/contracts/reward_engine.rs)
+- [Bootstrapper & Automation](https://github.com/Clawue884/PiRC/blob/main/bootstrap.rs)
 
-**Ekosistem Loop Ekonomi:**    
+## Ekosistem Loop Ekonomi
