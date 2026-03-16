@@ -43,181 +43,80 @@ Based on technical analysis of the visual data gap between **PiScan** (CEX-facin
 See [PiRC1: Pi Ecosystem Token Design](./PiRC1/ReadMe.md)
 
 
-# PiRC Research Extensions
+# Pi Ecosystem Economic Model
 
-This repository contains experimental proposals and research
-extensions for the Pi Requests for Comment (PiRC) framework.
+Research framework for modeling the long-term utility economy of the Pi ecosystem.
 
-## Research Proposals
+---
 
-- PiRC-101 — Adaptive Utility Allocation
-- PiRC-102 — Engagement Oracle Protocol
+## Architecture
 
-These proposals explore mechanisms for improving reward allocation,
-engagement measurement, and protocol security in the Pi ecosystem.
+![PiRC Architecture](https://github.com/Clawue884/PiRC/blob/main/file_00000000694471fa81c2a3a9c9367998.png)
+
+---
+
+## Overview
+
+This repository provides a simulation framework for analyzing:
+
+- Utility-driven token economies
+- Decentralized exchange liquidity
+- Application ecosystem growth
+- Human-in-the-loop digital labor economy
+- Long-term tokenomics and macroeconomic dynamics
+
+The framework combines smart-contract infrastructure prototypes and economic simulations to study how a large-scale crypto ecosystem may evolve over decades.
+
+---
+
+## Core Components
+
+### Smart Contract Layer
+
+Rust prototypes for ecosystem infrastructure:
+
+- Launchpad token evaluation
+- Liquidity bootstrap engine
+- Utility scoring oracle
+- Human work oracle
+- Subscription and escrow contracts
+- NFT utility contracts
+
+---
+
+### Economic Simulation Layer
+
+Python models for ecosystem analysis:
+
+- Global network growth models
+- AI-assisted adoption prediction
+- Tokenomics engine
+- Macro-economic model
+- Long-term whitepaper economic simulation
+
+---
 
 ## Goals
 
-• deterministic reward allocation  
-• engagement verification  
-• sybil-resistant participation metrics  
-• protocol-level incentive modeling
-
-
-## PiRC Proposals
-
-- PiRC-101: Adaptive Utility Allocation
-- PiRC-102: Engagement Oracle Protocol
-
-
-# PiRC Economic Architecture
-
-Research and simulation framework for the PiRC reward coordination system.
-
-This repository explores the economic structure behind PiRC including liquidity incentives, reward distribution models, and long-term ecosystem stability.
+- Simulate long-term utility-driven crypto economies
+- Model equilibrium pricing under network growth
+- Analyze liquidity and transaction velocity
+- Explore human–AI hybrid digital labor markets
 
 ---
 
-# Overview
+## Example Simulation
 
-PiRC introduces a liquidity-aware reward system connecting:
+```python
+from economics.pi_whitepaper_economic_model import PiWhitepaperEconomicModel
 
-• Pioneer mining supply  
-• External liquidity providers  
-• Utility-driven transactions  
-• Fee generation  
+def run():
 
-These components create a reflexive economic loop designed to stabilize the Pi ecosystem.
+    model = PiWhitepaperEconomicModel()
 
----
+    for year in range(50):
+        model.run_year()
+        print(model.summary())
 
-# Architecture
-
-Pioneer Supply  
-↓  
-Liquidity Contribution Engine  
-↓  
-Economic Activity  
-↓  
-Fee Generation  
-↓  
-Reward Distribution  
-
----
-
-# Repository Structure
-
-contracts/  
-Prototype contracts modeling reward and liquidity logic.
-
-economics/  
-Mathematical models of the PiRC economic system.
-
-simulations/  
-Agent-based simulations of ecosystem behavior.
-
-docs/  
-Protocol architecture and system design.
-
-automation/  
-Automated simulation runs using GitHub Actions.
-
----
-
-# Research Goals
-
-• Simulate liquidity growth  
-• Analyze reward fairness  
-• Test economic stability  
-• Evaluate governance parameter bounds
-
----
-
-# License
-
-MIT License
-
-## PiRC Architecture Overview
-
-PiRC (Pi Requests for Comment) menggabungkan ekosistem token, treasury, governance, DEX executor, reward engine, dan liquidity controller dalam satu loop ekonomi terintegrasi.
-
-### Diagram Arsitektur
-![PiRC Architecture]![PiRC Architecture](file_00000000694471fa81c2a3a9c9367998.png)
-)
-> Diagram di atas menggambarkan alur interaksi antara:
-> - **PiRC Token** (mint-on-demand)
-> - **Treasury Vault**
-> - **Governance Contract**
-> - **Liquidity Controller**
-> - **DEX Executor** (Free-Fault DEX)
-> - **Reward Engine**
-> - **Bootstrapper & GitHub Actions**
->
-> Setiap modul berkontribusi pada loop ekonomi yang reflexive dan sybil-resistant.
-
-### Dokumen Pendukung
-Untuk penjelasan lebih lengkap mengenai tiap modul dan interaksi kontrak, lihat dokumen arsitektur:
-
-[PiRC Architecture Overview](pirc_architecture_overview.md)
----
-
-┌─────────────┐
-                 │  PiRC Token │
-                 │ (pi_token)  │
-                 └─────┬──────┘
-                       │
-                       ▼
-               ┌───────────────┐
-               │ Treasury Vault│
-               │ (treasury_vault) │
-               └─────┬─────────┘
-        ┌────────────┼─────────────┐
-        ▼            ▼             ▼
- ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
- │Liquidity    │ │DEX Executor │ │Reward Engine│
- │Controller   │ │(dex_executor)│ │(reward_engine)│
- └─────┬───────┘ └─────┬───────┘ └─────┬───────┘
-       │               │               │
-       └───────┬───────┴───────┬───────┘
-               ▼               ▼
-           Bootstrapper & GitHub Actions
-           (bootstrap + automation)
-
-
-       # PiRC Architecture Overview
-
-
-Diagram ini menggambarkan alur modul PiRC:
-- **PiRC Token** → Mint-on-demand token utama
-- **Treasury Vault** → Menyimpan cadangan dan alokasi token
-- **Governance Contract** → Protokol tata kelola & voting
-- **Liquidity Controller** → Mengelola likuiditas dan insentif
-- **DEX Executor** → Free-Fault DEX untuk eksekusi trading
-- **Reward Engine** → Menyalurkan reward ke pengguna & pionir
-- **Bootstrapper & GitHub Actions** → Deployment, setup awal, simulasi otomatis
-
-## Modul Klik Langsung ke Kontrak
-
-- [PiRC Token](pi_token.rs)
-- [Treasury Vault](treasury_vault.rs)
-- [Governance Contract](governance.rs)
-- [Liquidity Controller](liquidity_controller.rs)
-- [DEX Executor](dex_executor_a.rs)
-- [Reward Engine](reward_engine.rs)
-- [Bootstrapper & Automation](bootstrap.rs)
-
-  
-## Ekosistem Loop Ekonomi
-
-
-## Research Extensions
-
-This fork expands the PiRC framework with additional research components:
-
-• Economic Coordination Whitepaper  
-• Governance Parameter Bounds  
-• Agent-Based Economic Simulation  
-• Liquidity Coordination Protocol  
-• Engagement Oracle Model
-
-These extensions explore mechanisms for improving long-term economic stability within the Pi ecosystem.
+if __name__ == "__main__":
+    run()
