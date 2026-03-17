@@ -1,36 +1,159 @@
 version: '3.8'
+
+name: pirc-ai-suite
+
+x-base: &base
+  restart: unless-stopped
+  environment:
+    - RUST_LOG=info
+    - RUST_BACKTRACE=1
+    - TZ=UTC
+
+x-rust-builder: &rust-builder
+  build:
+    context: .
+    dockerfile: Dockerfile.rust-builder
+
 services:
+  # 🧠 VECTOR DATABASE (Persistent Memory)
   qdrant:
-    image: qdrant/qdrant:v1.7.1
+    image: qdrant/qdrant:v1.10.1
+    <<: *base
     ports:
       - "6333:6333"
+      - "6334:6334"  # gRPC
     volumes:
       - qdrant_storage:/qdrant/storage
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/collections"]
-      interval: 30s
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/collections || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
 
+  # 📊 SUPER DASHBOARD (Real-time Analytics)
   dashboard:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dashboard
+    <<: *rust-builder
+    dockerfile: Dockerfile.dashboard
+    <<: *base
     ports:
       - "8080:8080"
+      - "8443:8443"  # HTTPS
     depends_on:
       qdrant:
         condition: service_healthy
+    volumes:
+      - ./models:/app/models:ro
+      - dashboard_db:/app/dashboard.db
+      - ./static:/app/static:ro
     environment:
       - RUST_LOG=info,pirc_dashboard=debug
-    volumes:
-      - ./models:/app/models
-      - ./pirc-dashboard/dashboard.db:/app/dashboard.db
+      - DATABASE_URL=sqlite:///app/dashboard.db
+      - QDRANT_URL=http://qdrant:6333
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
 
+  # 🤖 AI AGENT ORCHESTRATOR (Autonomous Bots)
   ai-agent:
-    build: .
+    <<: *rust-builder
+    dockerfile: Dockerfile.ai-agent
+    <<: *base
     depends_on:
-      - qdrant
+      qdrant:
+        condition: service_healthy
+      dashboard:
+        condition: service_healthy
+    volumes:
+      - ./models:/app/models:ro
     environment:
-      - RUST_LOG=info
+      - RUST_LOG=info,pirc_ai_agent=debug
+      - IRC_SERVER=irc.libera.chat:6667
+      - IRC_NICK=PiAIBot
+      - QDRANT_URL=http://qdrant:6333
+      - PI_WALLET_ADDRESS=pi1qsuperagent
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/health || exit 1"]
+      interval: 30s
+
+  # 💰 PI NETWORK GATEWAY (Wallet + Trading)
+  pi-gateway:
+    <<: *rust-builder
+    dockerfile: Dockerfile.pi-gateway
+    <<: *base
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./models:/app/models:ro
+    environment:
+      - RUST_LOG=info,pirc_pi_super=debug
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+
+  # 🚀 OPS DASHBOARD (Deployment Management)
+  ops-dashboard:
+    <<: *rust-builder
+    dockerfile: Dockerfile.ops
+    <<: *base
+    ports:
+      - "9090:9090"
+    environment:
+      - RUST_LOG=info,pirc_ops=debug
+
+  # 📈 PROMETHEUS (Monitoring)
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9091:9090"
+    <<: *base
+
+  # 👁️ GRAFANA (Visual Monitoring)
+  grafana:
+    image: grafana/grafana:10.4.1
+    volumes:
+      - grafana_storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=PiRC2024!
+    ports:
+      - "3001:3000"
+    <<: *base
+    depends_on:
+      - prometheus
 
 volumes:
   qdrant_storage:
+  dashboard_db:
+  prometheus_data:
+  grafana_storage:
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
