@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PiRC AI Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-900 to-blue-900 min-h-screen text-white">
+    <div class="container mx-auto p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                🚀 PiRC AI Dashboard
+            </h1>
+            <p class="text-xl opacity-90">Live Analytics • Trading • Autonomous Agents</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <!-- Metrics Cards -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20 hover:scale-105 transition-all">
+                <div class="text-3xl mb-2">📊 {{ metrics.live.messages_per_sec|round(1) }}/s</div>
+                <div class="text-lg opacity-75">Messages/sec</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20 hover:scale-105 transition-all">
+                <div class="text-3xl mb-2">👥 {{ metrics.live.total_users }}</div>
+                <div class="text-lg opacity-75">Active Users</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20 hover:scale-105 transition-all">
+                <div class="text-3xl mb-2 {% if metrics.live.sentiment_score > 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                    {{ "%.1f"|format(metrics.live.sentiment_score) }}%
+                </div>
+                <div class="text-lg opacity-75">Sentiment</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20 hover:scale-105 transition-all">
+                <div class="text-3xl mb-2 text-green-400">${{ "%.2f"|format(metrics.live.trading_pnl) }}</div>
+                <div class="text-lg opacity-75">Trading P&L</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Live Chart -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <h2 class="text-2xl font-bold mb-6">📈 Real-time Metrics</h2>
+                <canvas id="liveChart" height="200"></canvas>
+            </div>
+
+            <!-- Trading Signals -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <h2 class="text-2xl font-bold mb-6">💰 Live Trading Signals</h2>
+                <div id="tradingSignals" class="space-y-4">
+                    <div class="bg-green-500/20 p-4 rounded-xl border-l-4 border-green-400">
+                        <div class="font-bold">🟢 BUY SIGNAL</div>
+                        <div>Pi/USD • Confidence: 92% • Amount: 100 PI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Status -->
+        <div class="mt-12 bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+            <h2 class="text-2xl font-bold mb-6">🤖 Autonomous Agents</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-blue-500/20 rounded-xl">
+                    <div class="text-2xl font-bold">{{ agent_stats.channels }}</div>
+                    <div class="opacity-75">Channels</div>
+                </div>
+                <div class="text-center p-4 bg-purple-500/20 rounded-xl">
+                    <div class="text-2xl font-bold">{{ agent_stats.users }}</div>
+                    <div class="opacity-75">Tracked Users</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WebSocket Realtime Updates
+        const ws = new WebSocket('ws://localhost:8080/ws');
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            updateMetrics(data);
+        };
+
+        // Live Chart
+        const ctx = document.getElementById('liveChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Messages/sec',
+                    data: [],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        function updateMetrics(data) {
+            // Update cards
+            document.querySelectorAll('[data-metric]').forEach(el => {
+                const key = el.dataset.metric;
+                el.textContent = data[key];
+            });
+            
+            // Update chart
+            chart.data.labels.push(new Date().toLocaleTimeString());
+            chart.data.datasets[0].data.push(data.messages_per_sec);
+            if (chart.data.labels.length > 20) {
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
+            }
+            chart.update('none');
+        }
+
+        // Auto-refresh
+        setInterval(() => {
+            fetch('/api/metrics')
+                .then(r => r.json())
+                .then(updateMetrics);
+        }, 2000);
+    </script>
+</body>
+</html>
