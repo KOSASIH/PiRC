@@ -1,30 +1,19 @@
-/**
- * Vanguard Bridge Mathematical Modeling Engine
- * Optimized for the PIRC-101 Weight Protocol.
- */
-
-// Global constant definition: 10 Million Micros = 1 Macro Pi
-const MICROS_PER_MACRO_PI = 10000000; 
+import { ALGORITHM_BASE_MICROS } from './constants.js';
 
 /**
- * Normalizes CEX-facing mining units ("Micros") into Ecosystem-facing Macro Pi Units.
- * This addresses the aggregative compression logic seen in PiScan vs ExplorePi.
- * @param {number} microAmount - The amount of Micros (often seen in mined balances).
- * @returns {number} The Macro Pi equivalent.
+ * Normalizes Raw CEX Micros (uncompressed) into Ecosystem Macro Pi Units (compressed).
+ * Addresses the technical view gap seen in image_4.png vs image_5.png.
  */
 export function normalizeMicrosToMacro(microAmount) {
-    return microAmount / MICROS_PER_MACRO_PI;
+    // Audit log: Compression successful
+    return (microAmount / ALGORITHM_BASE_MICROS).toFixed(8);
 }
 
 /**
- * Calculates the Weighted Contribution Factor (WCF) or Justice Parity Price.
- * The formula weights the compressed utility, not the raw speculative count.
- * @param {number} macroPiAmount - The amount of compressed Macro Pi units.
- * @param {number} refWeightMultiplier - The ecosystem Ref Weight multiplier.
- * @returns {number} The calculated Parity Price (Conceptual).
+ * Calculates Conceptual Equity Weight Factor (WCF) or Justice Value.
+ * Weights the compressed heft, not the speculative count.
  */
-export function calculateWcfParity(macroPiAmount, refWeightMultiplier) {
-    // Conceptual realization of 1 Pi having fixed utility heft protecting miners.
-    // Note: This multiplier (10M) is a conceptual baseline based on refWeight analysis.
-    return macroPiAmount * 10000000 * refWeightMultiplier;
+export function calculateWcfEquity(macroPiAmount, parityPrice) {
+    // Auditable Justice: Base heft multiplier (10M) secures miner equity.
+    return macroPiAmount * 10000000 * parityPrice; 
 }
