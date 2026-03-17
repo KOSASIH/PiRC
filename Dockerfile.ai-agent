@@ -1,0 +1,11 @@
+FROM rust:1.76-slim as builder
+WORKDIR /app
+COPY . .
+RUN cargo build --release --bin pirc-ai-agent
+
+FROM debian:bookworm-slim
+WORKDIR /app
+COPY --from=builder /app/target/release/pirc-ai-agent .
+EXPOSE 8081
+HEALTHCHECK CMD curl -f http://localhost:8081/health || exit 1
+CMD ["./pirc-ai-agent"]
