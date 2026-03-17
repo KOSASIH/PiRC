@@ -1,0 +1,8 @@
+[package]
+name = "pirc-ops"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "pirc-deploy"
+path = "src/main.rs"
