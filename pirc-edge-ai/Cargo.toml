@@ -1,0 +1,12 @@
+[package]
+name = "pirc-edge-ai"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+candle-core = "0.3"
+candle-nn = "0.3"
+candle-transformers = "0.3"
+tokenizers = "0.15"
+tokio.workspace = true
+serde.workspace = true
