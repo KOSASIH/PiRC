@@ -1,12 +1,93 @@
-FROM rust:1.75-slim as builder
+# ============================================================================
+# PiRC AI Dashboard - Multi-stage Production Dockerfile
+# Optimized for size, speed, and security
+# ============================================================================
+
+# ─── STAGE 1: CARGO CACHE & DEPENDENCIES ───
+FROM rust:1.76-slim as cargo-cache
 WORKDIR /app
+RUN rustup default stable && rustup update
+
+# Copy workspace files for dependency caching
+COPY Cargo.toml Cargo.lock ./
+COPY pirc-dashboard/Cargo.toml ./pirc-dashboard/
+COPY pirc-ai-agent/Cargo.toml ./pirc-ai-agent/
+COPY pirc-edge-ai/Cargo.toml ./pirc-edge-ai/
+COPY pirc-pi-super/Cargo.toml ./pirc-pi-super/
+
+# Pre-download dependencies (cache hit!)
+RUN mkdir -p pirc-dashboard/src pirc-ai-agent/src pirc-edge-ai/src pirc-pi-super/src && \
+    cargo build --release --workspace && \
+    cargo clean -p pirc-ai-agent pirc-edge-ai pirc-pi-super
+
+# ─── STAGE 2: BUILDER ───
+FROM rust:1.76-slim as builder
+WORKDIR /app
+
+# Copy cached dependencies
+COPY --from=cargo-cache /app/target /app/target
+COPY --from=cargo-cache /usr/local/cargo /usr/local/cargo
+
+# Copy source code
 COPY pirc-dashboard ./pirc-dashboard
 COPY pirc-ai-agent ./pirc-ai-agent
-RUN cd pirc-dashboard && cargo build --release
+COPY pirc-edge-ai ./pirc-edge-ai
+COPY pirc-pi-super ./pirc-pi-super
+COPY Cargo.toml Cargo.lock ./
 
-FROM debian:bookworm-slim
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+# Build with optimizations
+RUN cargo build \
+    --release \
+    --package pirc-dashboard \
+    --features production,dashboard \
+    --bin pirc-dashboard && \
+    cargo clean
+
+# ─── STAGE 3: PRODUCTION RUNTIME ───
+FROM debian:bookworm-slim as production
+
+# Install minimal runtime dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        libssl3 \
+        fontconfig \
+        freetype \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN groupadd -r pirc --gid=1001 && \
+    useradd -r -g pirc --uid=1001 pirc && \
+    mkdir -p /app /data /models && \
+    chown -R pirc:pirc /app /data /models
+
 WORKDIR /app
-COPY --from=builder /app/pirc-dashboard/target/release/pirc-dashboard .
+
+# Copy binary from builder
+COPY --from=builder --chown=pirc:pirc /app/target/release/pirc-dashboard ./
+
+# Copy static assets
+COPY --chown=pirc:pirc pirc-dashboard/static ./static
+COPY --chown=pirc:pirc pirc-dashboard/templates ./templates
+
+# ─── HEALTHCHECK & EXPOSE ───
 EXPOSE 8080
-CMD ["./pirc-dashboard"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# ─── SECURITY & RUNTIME ───
+USER pirc
+ENV RUST_LOG=info
+ENV RUST_BACKTRACE=1
+ENV DATABASE_URL=sqlite:///data/dashboard.db
+
+# Pre-warm models directory
+VOLUME ["/models", "/data"]
+
+# Graceful shutdown
+STOPSIGNAL SIGTERM
+
+# Production entrypoint
+CMD ["/app/pirc-dashboard"]
