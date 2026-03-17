@@ -1,0 +1,33 @@
+[package]
+name = "pirc-dashboard"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Web Framework
+axum = "0.7"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors"] }
+tokio = { version = "1", features = ["full"] }
+
+# Templates & Frontend
+minijinja = "2.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Realtime
+tokio-tungstenite = "0.23"
+futures-util = "0.3"
+
+# Database & Metrics
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "sqlite", "chrono"] }
+qdrant-client = "1.7"
+
+# PiRC Integration
+pirc-ai-agent = { path = "../pirc-ai-agent" }
+
+# Utils
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
