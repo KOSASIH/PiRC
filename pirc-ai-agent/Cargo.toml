@@ -1,0 +1,17 @@
+[package]
+name = "pirc-ai-agent"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pirc = { git = "https://github.com/KOSASIH/PiRC" }  # Your fork
+tokio.workspace = true
+tracing.workspace = true
+candle-core = "0.3"
+candle-nn = "0.3"
+candle-transformers = "0.3"
+qdrant-client = "1.7"
+tower = "0.4"
+http = "1.1"
+mockall = "0.13"
+pi-sdk = "0.1"  # Pi Network SDK (stub)
