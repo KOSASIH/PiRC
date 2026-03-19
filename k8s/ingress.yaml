@@ -1,0 +1,55 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pirc-ingress
+  namespace: pirc-ai
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - pirc.yourdomain.com
+    secretName: pirc-tls
+  rules:
+  - host: pirc.yourdomain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pirc-dashboard
+            port:
+              number: 8080
+      - path: /pi
+        pathType: Prefix
+        backend:
+          service:
+            name: pi-gateway
+            port:
+              number: 3000
+      - path: /ai
+        pathType: Prefix
+        backend:
+          service:
+            name: ai-agent
+            port:
+              number: 8081
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pirc-monitor
+  namespace: pirc-ai
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: pirc-ai-suite
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
