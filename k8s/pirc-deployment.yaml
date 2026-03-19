@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pirc-dashboard
+  namespace: pirc-ai
+  labels:
+    app: pirc-dashboard
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pirc-dashboard
+  template:
+    metadata:
+      labels:
+        app: pirc-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: ghcr.io/KOSASIH/pirc-dashboard:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: REDIS_URL
+          value: "redis://redis.pirc-ai.svc.cluster.local:6379/0"
+        - name: QDRANT_URL
+          value: "http://qdrant.pirc-ai.svc.cluster.local:6333"
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pirc-dashboard
+  namespace: pirc-ai
+spec:
+  selector:
+    app: pirc-dashboard
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
