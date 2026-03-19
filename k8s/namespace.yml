@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pirc-ai
+  labels:
+    app: pirc-ai-suite
+    team: kosasih
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: pirc-quota
+  namespace: pirc-ai
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "20"
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pirc-allow-internal
+  namespace: pirc-ai
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector: {}
