@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🚀 PiRC v2.0 Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-6xl font-bold text-white mb-4 animate-pulse">🚀 PiRC v2.0</h1>
+            <p class="text-xl text-indigo-200">Super Advanced IRC Client Dashboard</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Active Users -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <div class="text-3xl font-bold text-white mb-2" id="active-users">0</div>
+                <div class="text-indigo-200 text-lg">Active Users</div>
+            </div>
+            
+            <!-- Banned Users -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <div class="text-3xl font-bold text-red-400 mb-2" id="banned-users">0</div>
+                <div class="text-red-200 text-lg">Banned Users</div>
+            </div>
+            
+            <!-- Requests -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <div class="text-3xl font-bold text-green-400 mb-2" id="requests-total">0</div>
+                <div class="text-green-200 text-lg">Total Requests</div>
+            </div>
+            
+            <!-- Uptime -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <div class="text-3xl font-bold text-blue-400 mb-2" id="uptime">0h</div>
+                <div class="text-blue-200 text-lg">Uptime</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Real-time Chart -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">📊 Real-time Activity</h2>
+                <canvas id="activityChart" height="200"></canvas>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">⚡ Quick Actions</h2>
+                <div class="space-y-4">
+                    <input type="text" id="ban-input" placeholder="Enter user to ban..." 
+                           class="w-full p-4 bg-white/20 rounded-xl text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <button onclick="banUser()" 
+                            class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300">
+                        🚫 BAN USER
+                    </button>
+                    <a href="/metrics" target="_blank" 
+                       class="block w-full text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300">
+                        📈 Prometheus Metrics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Real-time dashboard updates
+        async function updateStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                
+                document.getElementById('active-users').textContent = stats.active_users;
+                document.getElementById('banned-users').textContent = stats.banned_users;
+                document.getElementById('requests-total').textContent = stats.requests_total.toLocaleString();
+                document.getElementById('uptime').textContent = formatUptime(stats.uptime);
+            } catch (e) {
+                console.error('Stats update failed:', e);
+            }
+        }
+
+        function formatUptime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            return `${h}h ${m}m`;
+        }
+
+        async function banUser() {
+            const userId = document.getElementById('ban-input').value;
+            if (!userId) return;
+            
+            await fetch(`/api/ban/${userId}`, { method: 'POST' });
+            alert(`🚫 ${userId} banned!`);
+            document.getElementById('ban-input').value = '';
+            updateStats();
+        }
+
+        // Auto-update every 5s
+        setInterval(updateStats, 5000);
+        updateStats();
+
+        // Chart.js Activity Chart (placeholder)
+        const ctx = document.getElementById('activityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Now', '-5s', '-10s', '-15s'],
+                datasets: [{
+                    label: 'Active Users',
+                    data: [12, 19, 3, 5],
+                    borderColor: '#8B5CF6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { labels: { color: 'white' } } }
+            }
+        });
+    </script>
+</body>
+</html>
