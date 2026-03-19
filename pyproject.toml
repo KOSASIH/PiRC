@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "pirc"
+version = "2.0.0"
+description = "🚀 Super Advanced Raspberry Pi IRC Client"
+authors = ["KOSASIH <kosasihg88@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/KOSASIH/PiRC"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.9.1"
+redis = {extras = ["asyncio"], version = "^5.0.1"}
+pydantic = {extras = ["settings"], version = "^2.5.0"}
+structlog = "^24.1.0"
+prometheus-client = "^0.20.0"
+opentelemetry-api = "^1.22.0"
+opentelemetry-sdk = "^1.22.0"
+opentelemetry-exporter-otlp-proto-grpc = "^1.22.0"
+pybloom-live = "^4.0.1"
+uvicorn = {extras = ["standard"], version = "^0.25.0"}
+fastapi = "^0.104.1"
+python-multipart = "^0.0.6"
+aiorwlock = "^1.5.2"
+watchdog = "^4.0.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.5"
+mypy = "^1.8.0"
+pytest = "^7.4.4"
+pytest-asyncio = "^0.23.6"
+pytest-cov = "^4.1.0"
+black = "^24.1.1"
+pre-commit = "^3.6.0"
+nox = "^2024.1.7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*/tests/*", "*/migrations/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
