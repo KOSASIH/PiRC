@@ -1,6 +1,3 @@
-# 📚 **LLM Engine README.md**
-
-```markdown
 # 🧠 PiRC AI Suite - LLM Engine
 
 Production-ready **Rust LLM integration** with **Groq Cloud (300+ t/s)** + **Local Mistral 7B fallback**.
