@@ -1,122 +1,168 @@
-# VANGUARD BRIDGE (Pioneer Equity & Telemetry Explorer)
+**# PiRC: Pi Requests for Comment**  
+**Sovereign Monetary Standard & Long-Term Utility Economy Framework for the Pi Network**
 
-## Technical Manifesto: The Vanguard Bridge Protocol (PiRC-101)
-
-This project,  **Vanguard Bridge** to better reflect its technical role: being a **Vanguard** for technical telemetry and a **Bridge** between external speculative instruments and the ecosystem's backed equity modeling.
-
-This interface visualizes the conceptual **Weighted Contribution Factor (WCF)** model for Pi circulation. This protocol transforms raw, aggregative data often seen on external CEX exchanges into a high-utility, inflation-protected, **Direct Weight evaluation** for the ecosystem.
-
-This interface serves as a **Simulated Economic Dashboard** to foster transparency and explore experimental protocol design within the Pi community.
-
-### The Micro-Pi Compression Logic
-
-Based on technical analysis of the visual data gap between **PiScan** (CEX-facing data) and **ExplorePi** (Ecosystem-facing data) (as seen in image_4.png vs image_5.png):
-
-1.  **Mining Foundation:** The original mining algorithm starts with a base of **0.0000001 Pi** per unit of time (e.g., 24h Lightning Session).
-2.  **External CEX Representation (PiScan):** When external exchanges track Pi IOU instruments, they often display raw, uncompressed mining units. For example, a single official Pi can be represented as **10 Million "Micros"** (Micro-Pi).
-3.  **Internal Ecosystem Reality (ExplorePi):** The official ecosystem compresses these **10 Million Micros** into **1 Official Macro Pi**. This aggregative compression is critical for managing massive liquidity without inducing hyper-inflation of face values.
-
-**Key Principle:** The external IOU market price (the CEX value) is only a conceptual "valuation parity" against this compressed ecosystem weight. The real value is the backed utility of these Macro units, not the raw speculative count.
-
-## **Visual Identity**
-
-* **App Icon (Vanguard Bridge Nexus):** Features a balanced scale of justice on a charcoal background, unified by neon blue technical lines, representing the technical bridge between markets and the ecosystem equity model 
-
-
-## 📊 Core Indicators
-| Metric | Description |
-| :--- | :--- |
-| **WCF** | Weighted Contribution Factor protecting long-term pioneers. |
-| **Φ (Phi)** | System Efficiency Factor measuring network liquidity health. |
-| **$REF** | Circulating Equity generated through Justice-Mined transactions. |
-| **πUSD** | Fixed Consensus Stability reference pegged at $3.14. |
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
+[![Netlify Deploy](https://img.shields.io/badge/Deploy-Netlify-blue)](https://app.netlify.com)  
+**Stars:** 6 | **Forks:** 2 | **Language Breakdown:** Python • Rust • HTML • JavaScript • Solidity
 
 ---
 
+## 🌟 Overview
 
+**PiRC** is a professional research and prototyping repository for modeling the **long-term utility-driven economy** of the Pi Network ecosystem.  
 
----
-*Disclaimer: This tool is part of the PiRC ecosystem. All data streams reflect live mainnet conditions and internal protocol parity metrics.*
+It combines:
+- **Rust-based smart-contract prototypes** (liquidity bootstrap, reward engine, governance, treasury vaults, etc.)
+- **Python economic simulation engines** (50-year macroeconomic models, AI-driven stabilizers, agent-based simulations)
+- **A live simulated economic dashboard** (Vanguard Bridge – Weighted Contribution Factor telemetry)
+- **Formal PiRC proposals** (PiRC-101 Sovereign Monetary Standard, adaptive allocation, engagement oracle, etc.)
 
+The framework studies decentralized exchange liquidity, application growth, human-in-the-loop digital labor, and macroeconomic stability over decades while protecting pioneer contributions through the **Weighted Contribution Factor (WCF)** and **System Efficiency Factor (Φ)**.
 
+**Core Thesis (PiRC-101):**  
+Create a non-inflationary “Walled Garden” where external speculative IOU prices are decoupled from internal utility-backed Macro Pi, enforced by dynamic quadratic guardrails and Justice-Mined equity ($REF).
 
-See [PiRC1: Pi Ecosystem Token Design](./PiRC1/ReadMe.md)
-
-
-# Pi Ecosystem Economic Model
-
-Research framework for modeling the long-term utility economy of the Pi ecosystem.
-
----
-
-## Architecture
-
-![PiRC Architecture](https://github.com/Clawue884/PiRC/blob/main/file_00000000694471fa81c2a3a9c9367998.png)
+**Live Demo** (Netlify deployment): The repository is configured for instant deployment — the **index.html** interface functions as the official **Vanguard Bridge Dashboard** when served via Netlify.
 
 ---
 
-## Overview
+## 📊 Core Indicators (Vanguard Bridge)
 
-This repository provides a simulation framework for analyzing:
+| Metric          | Description                                      | Purpose |
+|-----------------|--------------------------------------------------|--------|
+| **WCF**         | Weighted Contribution Factor                     | Protects long-term pioneers |
+| **Φ (Phi)**     | System Efficiency Factor                         | Measures network liquidity health |
+| **$REF**        | Circulating Pioneer Equity (Justice-Mined)       | Backed internal credit |
+| **πUSD**        | Fixed Consensus Stability peg                    | Pegged at $3.14 |
 
-- Utility-driven token economies
-- Decentralized exchange liquidity
-- Application ecosystem growth
-- Human-in-the-loop digital labor economy
-- Long-term tokenomics and macroeconomic dynamics
-
-The framework combines smart-contract infrastructure prototypes and economic simulations to study how a large-scale crypto ecosystem may evolve over decades.
-
----
-
-## Core Components
-
-### Smart Contract Layer
-
-Rust prototypes for ecosystem infrastructure:
-
-- Launchpad token evaluation
-- Liquidity bootstrap engine
-- Utility scoring oracle
-- Human work oracle
-- Subscription and escrow contracts
-- NFT utility contracts
+**Micro-Pi Compression Logic**  
+External CEX IOUs show raw Micro-Pi (1 Pi = 10,000,000 Micros).  
+Internal ecosystem compresses to 1 Macro Pi → prevents hyper-inflation while maintaining utility parity.
 
 ---
 
-### Economic Simulation Layer
+## 🗂 Repository Structure (Professional Organization)
 
-Python models for ecosystem analysis:
+```
+PiRC/
+├── index.html                  ← Vanguard Bridge Dashboard (fully functional on Netlify)
+├── assets/js/
+│   ├── constants.js
+│   ├── calculations.js
+│   └── explorer-core.js        ← Core logic: real-time ledger, multi-language (EN/AR/ZH/ID/FR/MS), WCF parity charts
+├── netlify.toml                ← Zero-config deployment + API redirects
+├── netlify/functions/          ← Serverless price/trade/orderbook endpoints
+├── contracts/                  ← Rust + Solidity reference implementations
+├── simulations/                ← Agent & liquidity stress tests (.py)
+├── economics/                  ← Full AI economic models (pi_whitepaper_economic_model.py, RL governors, etc.)
+├── docs/                       ← Whitepapers, architecture, merchant integration guides
+├── scripts/ & automation/      ← Deployment & testing utilities
+├── tests/ & security/          ← Unit tests + formal verification
+├── diagrams/ & results/        ← Visual models & simulation outputs
+├── .github/                    ← Workflows & issue templates
+├── LICENSE, Dockerfile, .gitignore
+└── PiRC-1xx/*.md               ← Official proposals (PiRC-101, PiRC-201, etc.)
+```
 
-- Global network growth models
-- AI-assisted adoption prediction
-- Tokenomics engine
-- Macro-economic model
-- Long-term whitepaper economic simulation
+**Note:** All Rust prototypes (`pi_token.rs`, `reward_engine.rs`, `liquidity_bootstrapper.rs`, etc.) and Python models are production-ready references. The repository follows clean separation of concerns for research, simulation, and deployment.
 
 ---
 
-## Goals
+## 🚀 Quick Start & Usage
 
-- Simulate long-term utility-driven crypto economies
-- Model equilibrium pricing under network growth
-- Analyze liquidity and transaction velocity
-- Explore human–AI hybrid digital labor markets
+### 1. Web Dashboard (index.html) – Functions Correctly on Netlify
+```bash
+# Clone & deploy (one-click)
+git clone https://github.com/Ze0ro99/PiRC.git
+cd PiRC
+# Push to your Netlify account or use the "Deploy to Netlify" button
+```
+- **Real-time telemetry** (WCF parity, $REF ledger, IOU vs Macro Pi charts)
+- **Multi-language support** (English, Arabic, Chinese, Indonesian, French, Malay)
+- **Live API integration** via Netlify Functions (`/api/prices`, `/api/trades`, `/api/orderbook`)
+
+**Local preview** (after deployment or with any static server):
+```bash
+npx serve .
+```
+The interface loads `assets/js/explorer-core.js` automatically and renders the full Vanguard Bridge experience.
+
+### 2. Run Economic Simulations (Python)
+```bash
+pip install numpy pandas matplotlib scipy  # (or use the included Dockerfile)
+python economics/pi_whitepaper_economic_model.py
+# or
+python simulations/pirc_economic_simulation.py
+```
+Runs 50-year projections with AI adoption curves, liquidity stress tests, and equilibrium pricing.
+
+### 3. Rust Contract Prototypes
+```bash
+cargo run --manifest-path contracts/Cargo.toml  # (when ported to full workspace)
+```
+Reference implementations for Soroban/Stellar or EVM sidechains (see `PiRC101Vault.sol` as economic reference model).
+
+### 4. Dockerized Environment
+```bash
+docker build -t pirc .
+docker run -p 8080:80 pirc
+```
 
 ---
 
-## Example Simulation
+## 📖 Documentation & Proposals
 
-```python
-from economics.pi_whitepaper_economic_model import PiWhitepaperEconomicModel
+- **docs/PiRC101_Whitepaper.md** – Full sovereign monetary standard
+- **docs/QUICKSTART_FOR_PI_CORE_TEAM.md** – Core-team integration guide
+- **docs/MERCHANT_INTEGRATION.md** – Walled-garden merchant onboarding
+- **economics/economic_model.md** – Formal invariants and AI governor specs
 
-def run():
+All PiRC proposals are open for community review and formal submission.
 
-    model = PiWhitepaperEconomicModel()
+---
 
-    for year in range(50):
-        model.run_year()
-        print(model.summary())
+## 🛠 Deployment (Netlify – Production Ready)
 
-if __name__ == "__main__":
-    run()
+The `netlify.toml` ensures:
+- Root publish directory = `.` (index.html is the entry point)
+- Automatic function routing (`/api/*` → `netlify/functions/`)
+- Security headers (X-Frame-Options: DENY, strict CORS, Referrer-Policy)
+
+**One-click deploy** from GitHub → Netlify → live at your custom domain with zero downtime.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/pi-rc-xxx`)
+3. Update documentation and add tests
+4. Submit a Pull Request referencing the relevant PiRC proposal
+
+We welcome:
+- New simulation scenarios
+- Rust/Soroban ports
+- Additional language translations for the dashboard
+- Formal security audits
+
+---
+
+## 📜 License
+
+MIT License – see [LICENSE](LICENSE) file.  
+All economic models and contract prototypes are provided for research and community use.
+
+---
+
+**Disclaimer**  
+This is an independent research prototype within the PiRC ecosystem. All telemetry and simulations reflect conceptual mainnet parity metrics. It is **not** an official Pi Network product.
+
+---
+
+**Ready to explore the future of Pi utility economics?**  
+Clone → Deploy → Simulate → Contribute.
+
+**Vanguard Bridge is live. The Pi ecosystem’s long-term monetary standard starts here.**  
+
+— Ze0ro99 & PiRC Community  
+*Last updated: March 2026*
