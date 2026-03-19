@@ -1,11 +1,31 @@
-FROM rust:1.76-slim as builder
-WORKDIR /app
-COPY . .
-RUN cargo build --release --bin pirc-ai-agent
+# Multi-stage build for Raspberry Pi + x86
+FROM --platform=$BUILDPLATFORM rust:1.75-slim as builder
 
-FROM debian:bookworm-slim
 WORKDIR /app
-COPY --from=builder /app/target/release/pirc-ai-agent .
+COPY Cargo.toml Cargo.lock ./
+
+# Cache dependencies
+RUN mkdir src && echo "fn main(){}" > src/main.rs
+RUN cargo build --release
+RUN rm -rf src
+
+# Copy source
+COPY src ./src
+COPY models ./models
+
+# Build final binary
+RUN cargo build --release
+
+# Production image
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY --from=builder /app/target/release/pirc-ai-agent /usr/local/bin/
+COPY models ./models
+
 EXPOSE 8081
-HEALTHCHECK CMD curl -f http://localhost:8081/health || exit 1
-CMD ["./pirc-ai-agent"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:8081/health || exit 1
+
+CMD ["pirc-ai-agent"]
