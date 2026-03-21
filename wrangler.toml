@@ -1,0 +1,7 @@
+name = "pirc-ai-edge"
+main = "src/wasm/ai-agent.worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+QDRANT_URL = "https://qdrant.yourdomain.com"
+GROQ_KEY = "gsk_..."
