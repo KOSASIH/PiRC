@@ -1,0 +1,32 @@
+syntax = "proto3";
+package pirc.v2;
+
+service PiRCService {
+  rpc ChatAI(AIRequest) returns (AIResponse);
+  rpc TradePi(TradeRequest) returns (TradeResponse);
+  rpc GetWallet(WalletRequest) returns (WalletResponse);
+}
+
+message AIRequest {
+  string prompt = 1;
+  repeated string context = 2;
+  float temperature = 3;
+}
+
+message AIResponse {
+  string response = 1;
+  repeated float embedding = 2;
+  int64 tokens_used = 3;
+}
+
+message TradeRequest {
+  string strategy = 1;  // "momentum", "rsi", "arb"
+  double amount_pi = 2;
+  string pair = 3;      // "PI/USD", "PI/BTC"
+}
+
+message TradeResponse {
+  string tx_hash = 1;
+  double pnl = 2;
+  bool success = 3;
+}
