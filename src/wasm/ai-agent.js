@@ -18,4 +18,3 @@ export default {
     return Response.json({ ai_response: 'Ultra-fast edge AI!' });
   }
 };
-
