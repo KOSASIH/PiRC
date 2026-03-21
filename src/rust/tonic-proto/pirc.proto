@@ -30,3 +30,4 @@ message TradeResponse {
   double pnl = 2;
   bool success = 3;
 }
+
