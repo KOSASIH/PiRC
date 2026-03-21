@@ -1,7 +1,20 @@
 name = "pirc-ai-edge"
-main = "src/wasm/ai-agent.worker.js"
-compatibility_date = "2024-01-01"
+main = "ai-agent.worker.js"
+compatibility_date = "2024-01-15"
+workers_dev = true
+
+# Edge caching
+miniflare = { kv_persist = true }
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "your-kv-id"
 
 [vars]
-QDRANT_URL = "https://qdrant.yourdomain.com"
-GROQ_KEY = "gsk_..."
+QDRANT_URL = "https://qdrant.pirc-ai.com"
+QDRANT_API_KEY = "your-key"
+PI_GATEWAY_URL = "https://pirc.yourdomain.com/pi"
+
+[[r2_buckets]]
+binding = "AI_CACHE"
+bucket_name = "pirc-ai-cache"
