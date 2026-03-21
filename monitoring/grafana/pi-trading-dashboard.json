@@ -1,0 +1,40 @@
+{
+  "title": "💰 Pi Trading Empire",
+  "panels": [
+    {
+      "title": "PnL Over Time",
+      "type": "timeseries",
+      "targets": [{
+        "expr": "rate(pirc_pnl_usd[5m])",
+        "legendFormat": "{{strategy}}"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "unit": "currencyUSD"
+        }
+      }
+    },
+    {
+      "title": "AI Agent Latency",
+      "type": "stat",
+      "targets": [{
+        "expr": "histogram_quantile(0.95, rate(pirc_ai_latency_bucket[5m]))"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "s" }
+      },
+      "color": { "mode": "thresholds" }
+    },
+    {
+      "title": "Pi Balance",
+      "type": "gauge",
+      "targets": [{ "expr": "pirc_pi_balance" }],
+      "fieldConfig": {
+        "defaults": { "unit": "pi" }
+      }
+    }
+  ],
+  "time": { "from": "now-6h", "to": "now" },
+  "refresh": "30s"
+}
