@@ -18,3 +18,4 @@ PI_GATEWAY_URL = "https://pirc.yourdomain.com/pi"
 [[r2_buckets]]
 binding = "AI_CACHE"
 bucket_name = "pirc-ai-cache"
+
