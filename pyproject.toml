@@ -1,16 +1,32 @@
 [tool.poetry]
 name = "pirc"
-version = "2.0.0"
-description = "🚀 Super Advanced Raspberry Pi IRC Client"
+version = "2.1.0"
+description = "🚀 Super Advanced Pi Robotics + IRC Framework - Chat-Controlled Bots"
 authors = ["KOSASIH <kosasihg88@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/KOSASIH/PiRC"
+keywords = ["robotics", "irc", "raspberry-pi", "ai", "fastapi", "asyncio"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Topic :: Communications :: Chat",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+# 🌐 NETWORKING (Your base)
 aiohttp = "^3.9.1"
 redis = {extras = ["asyncio"], version = "^5.0.1"}
+aiorwlock = "^1.5.2"
+watchdog = "^4.0.0"
+
+# 🚀 WEB/API (Your FastAPI stack)
+uvicorn = {extras = ["standard"], version = "^0.25.0"}
+fastapi = "^0.104.1"
+python-multipart = "^0.0.6"
+
+# 📊 OBSERVABILITY (Your enterprise stack)
 pydantic = {extras = ["settings"], version = "^2.5.0"}
 structlog = "^24.1.0"
 prometheus-client = "^0.20.0"
@@ -18,13 +34,29 @@ opentelemetry-api = "^1.22.0"
 opentelemetry-sdk = "^1.22.0"
 opentelemetry-exporter-otlp-proto-grpc = "^1.22.0"
 pybloom-live = "^4.0.1"
-uvicorn = {extras = ["standard"], version = "^0.25.0"}
-fastapi = "^0.104.1"
-python-multipart = "^0.0.6"
-aiorwlock = "^1.5.2"
-watchdog = "^4.0.0"
+
+# 🤖 ROBOTICS SUPERCHARGES ⭐
+uvloop = "^0.19.0"                    # 10x asyncio
+trio = "^0.23.0"                      # Structured concurrency
+py-trees3 = "^3.0.0"                  # Behavior trees
+ultralytics = "^8.2.0"                # YOLOv10
+onnxruntime = {extras = ["cuda"], version = "^1.19.0"}  # Edge AI
+opencv-python-headless = "^4.10.0"    # Vision
+RPi.GPIO = "^0.7.1"                   # Pi GPIO
+pigpio = "^1.78"                      # High-speed GPIO
+libgpiod = "^0.5.0"                   # Modern GPIO
+zmq = "^26.0.0"                       # Robot comms
+
+# 🧠 EDGE AI
+llama-cpp-python = {version = "^0.2.78", optional = true}
+mlc-llm = {version = "^0.1.0", optional = true}
+
+[tool.poetry.extras]
+ai = ["llama-cpp-python", "mlc-llm"]
+cuda = ["onnxruntime[cuda]"]
 
 [tool.poetry.group.dev.dependencies]
+# Your existing + robotics testing
 ruff = "^0.1.5"
 mypy = "^1.8.0"
 pytest = "^7.4.4"
@@ -33,28 +65,5 @@ pytest-cov = "^4.1.0"
 black = "^24.1.1"
 pre-commit = "^3.6.0"
 nox = "^2024.1.7"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.ruff]
-line-length = 100
-target-version = "py311"
-
-[tool.mypy]
-python_version = "3.11"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-
-[tool.coverage.run]
-source = ["src"]
-omit = ["*/tests/*", "*/migrations/*"]
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "raise AssertionError",
-    "raise NotImplementedError",
-]
+pytest-mock = "^3.12.0"
+asynctest = "^0.13.0"
