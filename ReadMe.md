@@ -137,7 +137,7 @@ pirc demo irc_battle         # ⚔️   IRC robot arena wars
 
 **Live Community Channels:**
 
-Discord: discord.gg/pirc  
+Discord: [discord.gg/pirc](https://discord.gg/dZbm5VmT)
 **IRC:** `#pirc` on `irc.libera.chat`  
 Twitter: [@PiRC_Dev](https://twitter.com/PiRC_Dev)
 
