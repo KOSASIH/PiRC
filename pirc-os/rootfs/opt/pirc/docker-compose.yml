@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  pirc-vision:
+    image: pirc/vision:latest
+    privileged: true
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - /opt/pirc/models:/models
+      - /tmp/pirc:/tmp/pirc
+
+  pirc-nav:
+    image: pirc/navigation:latest
+    privileged: true
+    devices:
+      - /dev/ttyAMA0:/dev/ttyAMA0
+      - /dev/i2c-1:/dev/i2c-1
+    volumes:
+      - /opt/pirc/maps:/maps
+
+  rosbridge:
+    image: osrf/ros2:humble-desktop
+    command: ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+    ports:
+      - "9090:9090"
