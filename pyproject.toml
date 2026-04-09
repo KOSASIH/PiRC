@@ -193,3 +193,4 @@ mypy = { }
 isort = { }
 safety = { }
 bandit = { }
+
