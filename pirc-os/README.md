@@ -196,4 +196,3 @@ MIT License - Free for commercial use.
 **PiRC-OS turns $350 hardware into production robot. Boot and go!** 🥇
 
 [PiRC Main Repo](https://github.com/KOSASIH/PiRC) | [Discord](https://discord.gg/pirc)
-```
