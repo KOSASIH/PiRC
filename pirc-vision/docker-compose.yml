@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  pirc-vision:
+    build: .
+    privileged: true
+    runtime: nvidia
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+      - /dev/apex_0:/dev/apex_0  # Myriad X
+      - /dev/edgetpu0:/dev/edgetpu0  # Coral
+    ports:
+      - "8554:8554"
+      - "8080:8080"
+      - "9090:9090"
+    volumes:
+      - ./models:/opt/pirc-vision/models
+      - /tmp/pirc:/tmp/pirc
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_DEVICE_ORDER=PCI_BUS_ID
+    restart: unless-stopped
