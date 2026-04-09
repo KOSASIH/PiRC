@@ -1,0 +1,18 @@
+ultralytics==8.2.0
+torch==2.1.0+cu121 torchvision==0.16.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+opencv-python==4.9.0.80
+depthai==2.30.0.0
+pygflags==4.0
+numpy==1.26.0
+supervision==0.18.0
+transformers==4.36.0
+accelerate==0.25.0
+orb_slam3_ros==0.2.0
+cartographer_ros==1.0.0
+colmap==3.8
+nerfstudio==1.1.0
+tflite-runtime==2.14.0
+libedgetpu==16.0.1
+rclpy==0.21.0
+sensor_msgs==4.3.0
+cv_bridge==3.2.0
