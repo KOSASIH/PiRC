@@ -1,0 +1,22 @@
+FROM ubuntu:24.04
+
+# PiRC-OS Docker Base
+RUN apt update && apt install -y \
+    linux-image-rt-arm64 \
+    ros-humble-desktop \
+    python3-pip \
+    docker.io \
+    libcamera0 \
+    wiringpi \
+    i2c-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pre-install PiRC stack
+RUN pip3 install torch==2.1.0 \
+                 ultralytics \
+                 opencv-python \
+                 rclpy \
+                 sensor-msgs
+
+COPY rootfs/ /
+CMD ["/sbin/init"]
