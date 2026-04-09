@@ -1,0 +1,25 @@
+# PiRC Vision Configuration
+yolo10_model: "models/yolo10n.pt"
+rt_detr_model: "models/rt-detr-resnet50"
+coral_model: "models/coral_edgetpu.tflite"
+orb_vocab: "models/ORBvoc.txt"
+
+# Hardware
+camera:
+  width: 640
+  height: 640
+  fps: 60
+
+# Detection
+confidence_threshold: 0.25
+iou_threshold: 0.5
+max_detections: 100
+
+# RTSP
+rtsp_port: 8554
+rtsp_path: "/stream"
+
+# ROS Topics
+detections_topic: "/pirc/detections"
+pose_topic: "/pirc/pose"
+image_topic: "/pirc/image_raw"
