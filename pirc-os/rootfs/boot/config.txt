@@ -18,4 +18,3 @@ enable_uart=1
 
 # Real-time CPU isolation
 isolcpus=0-3
-
