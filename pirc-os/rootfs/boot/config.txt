@@ -1,0 +1,20 @@
+# PiRC-OS Optimized Boot Config
+kernel=Image-rt-arm64
+initramfs initrd.img-rt-arm64 followkernel
+
+# Overclock + RT optimizations
+arm_freq=2000
+over_voltage=6
+gpu_mem=256
+
+# Camera + CSI
+camera_auto_detect=1
+dtoverlay=imx219
+
+# I2C + SPI + UART
+dtparam=i2c_arm=on
+dtparam=spi=on
+enable_uart=1
+
+# Real-time CPU isolation
+isolcpus=0-3
