@@ -1,0 +1,17 @@
+[Unit]
+Description=PiRC Vision Service
+After=docker.service network.target
+Wants=docker.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/opt/pirc
+ExecStart=/usr/bin/python3 /opt/pirc/vision/main.py
+Restart=always
+RestartSec=5
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=multi-user.target
