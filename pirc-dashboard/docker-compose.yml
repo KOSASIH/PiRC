@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  pirc-dashboard:
+    build: .
+    ports:
+      - "8080:8080"
+      - "3000:3000"
+      - "9090:9090"
+      - "8554:8554"
+    volumes:
+      - ./public:/app/public
+      - ./build:/app/build
+    depends_on:
+      - rosbridge
+    networks:
+      - pirc-net
+
+  rosbridge:
+    image: osrf/ros2:humble-rosbridge
+    command: ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+    ports:
+      - "9090:9090"
+    networks:
+      - pirc-net
+
+networks:
+  pirc-net:
