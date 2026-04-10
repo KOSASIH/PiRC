@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  pirc-hal:
+    build: .
+    privileged: true
+    devices:
+      - /dev/i2c-1:/dev/i2c-1
+      - /dev/gpiochip0:/dev/gpiochip0
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/can0:/dev/can0
+    volumes:
+      - /dev:/dev
+      - ./config:/opt/pirc-hal/config
+    environment:
+      - ROS_DOMAIN_ID=0
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+    network_mode: host
+    restart: unless-stopped
+
+  micro-ros-agent:
+    image: microros/micro-ros-agent:humble
+    privileged: true
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    command: micro-ros-agent udp4 --port 8888
+    network_mode: host
