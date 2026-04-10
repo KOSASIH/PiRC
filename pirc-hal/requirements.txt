@@ -1,0 +1,11 @@
+pigpio==1.78
+smbus2==0.4.2
+pyina219==1.1.0
+python-can==4.3.1
+rclpy==0.21.0
+sensor_msgs==4.3.0
+geometry_msgs==2.3.0
+std_msgs==2.0.0
+numpy==1.26.0
+filterpy==1.4.5
+pyyaml==6.0.1
