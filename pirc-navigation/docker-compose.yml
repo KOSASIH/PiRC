@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  pirc-navigation:
+    build: .
+    privileged: true
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0  # RPLIDAR
+      - /dev/video0:/dev/video0    # RealSense
+    volumes:
+      - /dev:/dev
+      - ./config:/opt/pirc-navigation/config
+      - ./maps:/opt/pirc-navigation/maps
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedx_cpp
+    restart: unless-stopped
+    network_mode: host
