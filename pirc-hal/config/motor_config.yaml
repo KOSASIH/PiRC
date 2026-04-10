@@ -1,0 +1,23 @@
+motors:
+  left_motor:
+    type: "tb6600"
+    pwm_pin: 18
+    dir_pin: 24
+    enable_pin: 25
+  
+  right_motor:
+    type: "tb6600"
+    pwm_pin: 19
+    dir_pin: 23
+    enable_pin: 22
+  
+  turn_motor:
+    type: "drv8876"
+    pwm_pin: 12
+    in1_pin: 16
+    in2_pin: 20
+  
+  odrive_motor:
+    type: "odrive"
+    can_channel: "can0"
+    serial: "ODRV1"
