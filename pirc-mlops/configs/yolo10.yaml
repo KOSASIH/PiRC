@@ -1,0 +1,12 @@
+# PiRC YOLOv10 Training Config
+model_path: "model_zoo/yolo10n.pt"
+dataset_path: "datasets/robot-detection-v2"
+epochs: 300
+imgsz: 640
+batch_size: 16
+lr0: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 3.0
+patience: 50
+save_period: 10
