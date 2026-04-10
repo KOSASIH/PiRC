@@ -1,0 +1,11 @@
+casadi==3.6.3
+ompl==1.6.0
+py-trees==2.4.4
+numpy==1.26.0
+scipy==1.11.0
+matplotlib==3.8.0
+rclpy==0.21.0
+geometry_msgs==2.3.0
+nav_msgs==2.0.0
+sensor_msgs==4.3.0
+tf2_ros==0.25.0
