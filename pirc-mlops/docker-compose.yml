@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  pirc-mlops:
+    build: .
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ./datasets:/workspace/datasets
+      - ./models:/workspace/models
+      - ./wandb:/root/.wandb
+    ports:
+      - "8080:8080"    # Label Studio
+      - "8081:8081"    # W&B Local
+    environment:
+      - WANDB_API_KEY=${WANDB_API_KEY}
+      - NVIDIA_VISIBLE_DEVICES=all
+    command: tail -f /dev/null
+
+  label-studio:
+    image: heartexlabs/label-studio:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./label-studio-data:/label-studio/data
+    environment:
+      - LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
+      - LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data/unlabeled
