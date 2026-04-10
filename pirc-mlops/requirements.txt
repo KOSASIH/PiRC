@@ -1,0 +1,13 @@
+torch==2.1.0+cu121 torchvision==0.16.0+cu121 torchaudio==2.1.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+ultralytics==8.2.48
+transformers==4.36.2
+accelerate==0.25.0
+wandb==0.17.0
+ray[tune]==2.10.0
+optuna==3.6.1
+roboflow==1.1.18
+label-studio==1.12.3
+supervision==0.18.0
+thop==0.1.1
+ultralytics==8.2.48
+tensorboard==2.15.1
